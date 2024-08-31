@@ -42,7 +42,7 @@ def index():
     article = Riley_blog.query.order_by(Riley_blog.post_date.desc()).all()
     print(current_user.is_anonymous)
     if current_user.is_anonymous:
-        name = "quest"
+        name = "guest"
     else:
         name = current_user.username
         print("Success!!!")
