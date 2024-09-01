@@ -8,7 +8,7 @@ from flask import flash
 
 app = Flask(__name__)
 
-app.config["SQLALCHEMY_DATABASE_URL"] = "sqlite://blogs.db"
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///blogs.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["SECRET_KEY"] = "sigmaskibidigyattohiomewing"
 
@@ -28,7 +28,7 @@ class Riley_blog(db.Model):
     title = db.Column(db.String(50))
     author = db.Column(db.String(20))
     post_date = db.Column(db.DateTime)
-    content = db.Column(db.text)
+    content = db.Column(db.Text)
 
 
 class User(db.Model, UserMixin):
@@ -74,7 +74,7 @@ def addpost():
     return render_template("add.html")
 
 
-@app.route("/update/<int:id", methods=["POST", "GET"])
+@app.route("/update/<int:id>", methods=["POST", "GET"])
 @login_required
 def update(id):
     if request.method == "POST":
@@ -98,7 +98,7 @@ def update(id):
     return render_template("update.html", edit=edit)
 
 
-@app.route("/delete/<int: id>")
+@app.route("/delete/<int:id>")
 @login_required
 def delete(id):
     data = Riley_blog.query.filter_by(id=id).first()
@@ -113,8 +113,8 @@ def delete(id):
 def login():
     if request.method == "POST":
         print("login")
-        username = request.form("username")
-        password = request.form("password")
+        username = request.form["username"]
+        password = request.form["password"]
         user = User.query.filter_by(username=username).first()
 
         if not user and not check_password_hash(user.password, password):
@@ -123,9 +123,8 @@ def login():
             return render_template("not.html")
     else:
         login_user(user)
-
         print("Successfully logged in")
-        return redirect(url_for("index.html"))
+        return redirect(url_for("index"))
 
     return render_template("login.html")
 
@@ -134,8 +133,8 @@ def login():
 def signup():
     if request.method == "POST":
         print("Attempt to sign up!")
-        username = request.form("username")
-        password = request.form("password")
+        username = request.form["username"]
+        password = request.form["password"]
 
         user = User(username=username, password=password)
         db.session.add(user)
@@ -146,10 +145,10 @@ def signup():
     return render_template("signup.html")
 
 
-@app.route("/logout", methods=["POST", "GET"])
+@app.route("/logout", methods=["GET", "POST"])
 @login_required
 def logout():
-    login_user()
+    logout_user()
 
     return redirect(url_for("index"))
 
