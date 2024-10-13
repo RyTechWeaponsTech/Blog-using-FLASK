@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Sign Up</title>
     <!-- connected to the static css -->
     <link
       rel="stylesheet"
@@ -24,50 +24,44 @@
   </head>
   <body>
     <form
-      class="modal-content animate"
-      action="{{ url_for('login') }}"
+      action="{{ url_for('signup')}}"
       method="POST"
+      class="modal-content animate"
     >
       <div class="container">
-        <!-- username -->
         <label for="username">Username</label>
         <input
           type="text"
-          placeholder="Enter your name"
           name="username"
           id="username"
+          placeholder="Enter your username"
           required
         />
-        <!-- password -->
-        <label for="password">Password</label>
-        <input
+      </div>
+      <div class="container">
+        <label for="password">Password</label
+        ><input
           type="text"
-          placeholder="Enter your password"
           name="password"
           id="password"
+          placeholder="Enter your password"
           required
         />
-        <!-- submit -->
-        <button type="submit">Login</button>
-        <label for="checkbox" checked="checked" name="remember"
-          >Remember me</label
-        >
-      </div>
 
-      <div class="container">
+        <button type="submit">Sign-Up</button>
+      </div>
+      <div class="container" style="background: #f1f1f1">
         <a href="/">
           <button
-            class="cancelbtn"
             type="button"
             onclick="document.getElementById('id01').style.display='none'"
+            class="cancelbtn"
           >
             Cancel
           </button>
         </a>
 
-        <span class="password"
-          >I forgor my <a href="#">Password :skull:</a></span
-        >
+        <span class="password">Forgor <a href="#">P assword</a>?</span>
       </div>
     </form>
   </body>
